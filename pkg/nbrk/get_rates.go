@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-const (
-	ErrRequestFailed        = "nbrk: failed to make request"
-	ErrReadBodyFailed       = "nbrk: failed to read body"
-	ErrUnexpectedStatusCode = "nbrk: unexpected status code"
-	ErrUnmarshalXMLFailed   = "nbrk: failed to unmarshal xml"
+var (
+	ErrRequestFailed        = errors.New("nbrk: failed to make request")
+	ErrReadBodyFailed       = errors.New("nbrk: failed to read body")
+	ErrUnexpectedStatusCode = errors.New("nbrk: unexpected status code")
+	ErrUnmarshalXMLFailed   = errors.New("nbrk: failed to unmarshal xml")
 )
 
 type Item struct {
@@ -41,22 +41,22 @@ func (n *nbrk) GetRates(fdate Fdate) (*Rates, error) {
 
 	resp, err := n.httpClient.Get(url)
 	if err != nil {
-		return nil, errors.Join(errors.New(ErrRequestFailed), err)
+		return nil, errors.Join(ErrRequestFailed, err)
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, errors.Join(errors.New(ErrReadBodyFailed), err)
+		return nil, errors.Join(ErrReadBodyFailed, err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, errors.New(ErrUnexpectedStatusCode)
+		return nil, ErrUnexpectedStatusCode
 	}
 
 	var rates Rates
 	if err := xml.Unmarshal(body, &rates); err != nil {
-		return nil, errors.Join(errors.New(ErrUnmarshalXMLFailed), err)
+		return nil, errors.Join(ErrUnmarshalXMLFailed, err)
 	}
 
 	return &rates, nil
