@@ -36,7 +36,7 @@ type Rates struct {
 	Items       []Item   `xml:"item,omitempty"`
 }
 
-func (n *nbrk) GetRates(fdate Fdate) (*Rates, error) {
+func (n *Nbrk) GetRates(fdate Fdate) (*Rates, error) {
 	url := fmt.Sprintf("%s/get_rates.cfm?fdate=%s", baseURL, fdate)
 
 	resp, err := n.httpClient.Get(url)

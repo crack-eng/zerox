@@ -4,12 +4,12 @@ import "net/http"
 
 const baseURL string = "https://nationalbank.kz/rss"
 
-type nbrk struct {
+type Nbrk struct {
 	httpClient *http.Client
 }
 
-func New(httpClient *http.Client) *nbrk {
-	return &nbrk{
+func New(httpClient *http.Client) *Nbrk {
+	return &Nbrk{
 		httpClient: httpClient,
 	}
 }
