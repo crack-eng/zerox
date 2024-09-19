@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	ErrRequestFailed        = errors.New("nbrk: failed to make request")
-	ErrReadBodyFailed       = errors.New("nbrk: failed to read body")
-	ErrUnexpectedStatusCode = errors.New("nbrk: unexpected status code")
-	ErrUnmarshalXMLFailed   = errors.New("nbrk: failed to unmarshal xml")
+	ErrRequestFailed        = errors.New("failed to make request")
+	ErrReadBodyFailed       = errors.New("failed to read body")
+	ErrUnexpectedStatusCode = errors.New("unexpected status code")
+	ErrUnmarshalXMLFailed   = errors.New("failed to unmarshal xml")
 )
 
 type Item struct {
