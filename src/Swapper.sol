@@ -25,13 +25,13 @@ contract Swapper is Ownable, ReentrancyGuard {
         address swapper;
     }
 
-    mapping(bytes16 => Swap) public swaps;
+    mapping(bytes32 => Swap) public swaps;
 
-    event SwapInitiated(bytes16 indexed id, uint256 amount);
-    event SwapTransferred(bytes16 indexed id, uint256 amount, address swapper);
-    event SwapCompleted(bytes16 indexed id);
-    event SwapFailed(bytes16 indexed id);
-    event SwapCancelled(bytes16 indexed id);
+    event SwapInitiated(bytes32 indexed id, uint256 amount);
+    event SwapTransferred(bytes32 indexed id, uint256 amount, address swapper);
+    event SwapCompleted(bytes32 indexed id);
+    event SwapFailed(bytes32 indexed id);
+    event SwapCancelled(bytes32 indexed id);
 
     error SWAP_ALREADY_EXISTS();
     error SWAP_NOT_INITIATED();
@@ -43,13 +43,13 @@ contract Swapper is Ownable, ReentrancyGuard {
         usdc = IERC20(_usdc);
     }
 
-    function initiateSwap(bytes16 _id, uint256 _amount) external onlyOwner {
+    function initiateSwap(bytes32 _id, uint256 _amount) external onlyOwner {
         if (swaps[_id].amount != 0) revert SWAP_ALREADY_EXISTS();
         swaps[_id] = Swap(_amount, SwapStatus.Initiated, address(0));
         emit SwapInitiated(_id, _amount);
     }
 
-    function transferSwap(bytes16 _id) external nonReentrant {
+    function transferSwap(bytes32 _id) external nonReentrant {
         Swap storage swap = swaps[_id];
         if (swap.status != SwapStatus.Initiated) revert SWAP_NOT_INITIATED();
 
@@ -60,7 +60,7 @@ contract Swapper is Ownable, ReentrancyGuard {
         emit SwapTransferred(_id, swap.amount, msg.sender);
     }
 
-    function completeSwap(bytes16 _id) external onlyOwner {
+    function completeSwap(bytes32 _id) external onlyOwner {
         Swap storage swap = swaps[_id];
         if (swap.status != SwapStatus.Transferred) revert SWAP_NOT_TRANSFERRED();
 
@@ -68,7 +68,7 @@ contract Swapper is Ownable, ReentrancyGuard {
         emit SwapCompleted(_id);
     }
 
-    function failSwap(bytes16 _id) external onlyOwner {
+    function failSwap(bytes32 _id) external onlyOwner {
         Swap storage swap = swaps[_id];
         if (swap.status == SwapStatus.Completed) revert SWAP_ALREADY_COMPLETED();
         if (swap.status == SwapStatus.Cancelled) revert SWAP_ALREADY_CANCELLED();
@@ -81,7 +81,7 @@ contract Swapper is Ownable, ReentrancyGuard {
         emit SwapFailed(_id);
     }
 
-    function cancelSwap(bytes16 _id) external onlyOwner {
+    function cancelSwap(bytes32 _id) external onlyOwner {
         Swap storage swap = swaps[_id];
         if (swap.status != SwapStatus.Initiated) revert SWAP_NOT_INITIATED();
 
