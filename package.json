@@ -1,4 +1,6 @@
 {
+  "name": "zerox",
+  "type": "module",
   "dependencies": {
     "viem": "^2.21.9"
   }
