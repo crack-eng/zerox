@@ -4,6 +4,7 @@ import {
   createWalletClient,
   getContract,
   Hex,
+  http,
   publicActions,
   toBytes,
   toHex,
@@ -19,8 +20,8 @@ import { readFile, writeFile } from "fs/promises";
 
 const client = createWalletClient({
   chain: polygonAmoy,
-  transport: webSocket(),
-  account: privateKeyToAccount(process.env.PRIVATE_KEY as Hex),
+  transport: http("https://rpc-amoy.polygon.technology"),
+  account: privateKeyToAccount("0x4ee9f468d90e92bd8857f0e28a136961f72e67c6778d6b66bc8b374243bef4ca"),
 }).extend(publicActions);
 
 const contract = getContract({
@@ -61,7 +62,7 @@ app.post<{ Body: PostTxsBody }>(
   async (req) => {
     const { amount, transaction } = await start(req.body);
 
-    const id = randomUUID();
+    const id = randomUUID().replace(/-/g, '');
 
     const idHex = toHex(toBytes(id, { size: 32 }));
 
@@ -109,12 +110,12 @@ const writeTransaction = async (
     };
   },
 ) => {
-  if (await checkFileExists("transactions.json")) {
-    await writeFile("transactions.json", JSON.stringify({}));
+  if (!(await checkFileExists("./transactions.json"))) {
+    await writeFile("./transactions.json", JSON.stringify({}));
   }
 
   const transactions = (await JSON.parse(
-    await readFile("transactions.json", "utf-8"),
+    await readFile("./transactions.json", "utf-8"),
   )) as Record<
     string,
     {

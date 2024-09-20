@@ -82,6 +82,8 @@ const start = async (
     };
   };
 
+  console.log(json);
+
   const launchUrl = new URL(json.data.ext.button.launchUrl);
 
   const transactionId = launchUrl.searchParams.get("transactionId") as string;
