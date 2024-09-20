@@ -1,34 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
-	"time"
 
-	"github.com/crack-eng/zerox/pkg/nbrk"
+	"github.com/crack-eng/zerox/internal/handler"
 )
 
 func main() {
-	httpClient := &http.Client{
-		Timeout: time.Second * 10,
-	}
+	http.HandleFunc("GET /rates/{base}/kzt", handler.GetRate)
 
-	n := nbrk.New(httpClient)
-
-	rates, err := n.GetRates(nbrk.NewFdate(time.Now()))
-	if err != nil {
-		log.Fatalf("Error getting rates: %v", err)
-	}
-
-	if rates.Info != "" {
-		fmt.Println("Info:", rates.Info)
-		return
-	}
-
-	for _, item := range rates.Items {
-		unitValue := item.Description / float64(item.Quant)
-		fmt.Printf("%s - %.4f / %d = %.4f\n",
-			item.Title, item.Description, item.Quant, unitValue)
-	}
+	http.ListenAndServe("localhost:8080", nil)
 }
