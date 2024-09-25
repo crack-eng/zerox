@@ -1,13 +1,14 @@
 import { Suspense, lazy } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import { SDKProvider } from "@telegram-apps/sdk-react";
 
 // Works also with SSR as expected
 const Card = lazy(() => import("./Card"));
 
 function App() {
   return (
-    <>
+    <SDKProvider acceptCustomStyles debug>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
@@ -25,7 +26,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </SDKProvider>
   );
 }
 
