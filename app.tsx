@@ -6,7 +6,7 @@ import { createRoot } from "react-dom/client";
 const container = document.querySelector("#app");
 
 if (!container) {
-  throw new Error("createRoot(...): Target container is not a DOM element.");
+  throw new Error("Container is not a DOM element.");
 }
 
 createRoot(container).render(
