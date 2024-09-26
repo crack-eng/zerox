@@ -36,16 +36,14 @@ export const isEvent = (
     return false;
   }
 
-  if (!("eventData" in data)) {
-    return false;
-  }
+  if ("eventData" in data) {
+    if (typeof data.eventData !== "object") {
+      return false;
+    }
 
-  if (typeof data.eventData !== "object") {
-    return false;
-  }
-
-  if (data.eventData === null) {
-    return false;
+    if (data.eventData === null) {
+      return false;
+    }
   }
 
   return true;
