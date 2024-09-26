@@ -1,4 +1,10 @@
-import { isMethodEvent, type MethodEvent } from "./predicates/is-method-event";
+import type { MethodData } from "./event-data";
+import { methodTypes, type MethodType } from "./event-type";
+
+export type MethodEvent<T extends MethodType> = {
+  eventType: T;
+  eventData?: MethodData[T];
+};
 
 type EventPoster = (eventType: string, eventData: string) => void;
 type EventReceiver = (eventType: string, eventData: unknown) => void;
@@ -28,10 +34,12 @@ window.addEventListener(
       return;
     }
 
-    if (!isMethodEvent(event)) return;
-
     if (typeof window.TelegramWebviewProxy !== "undefined") {
       const data = JSON.parse(event.data) as MethodEvent<any>;
+
+      if (!methodTypes.includes(data.eventType)) {
+        return;
+      }
 
       if (typeof data.eventData !== "undefined") {
         window.TelegramWebviewProxy.postEvent(
