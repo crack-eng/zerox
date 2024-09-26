@@ -1,7 +1,7 @@
 import { NewPayment } from "#apps/new-payment";
-import "#packages/telegram";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "#packages/tma/shim";
 
 const container = document.querySelector("#app");
 
