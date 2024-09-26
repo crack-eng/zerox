@@ -34,13 +34,19 @@ window.addEventListener(
       return;
     }
 
+    let data: MethodEvent<any>;
+
+    try {
+      data = JSON.parse(event.data) as MethodEvent<any>;
+    } catch (error) {
+      return;
+    }
+
+    if (!methodTypes.includes(data.eventType)) {
+      return;
+    }
+
     if (typeof window.TelegramWebviewProxy !== "undefined") {
-      const data = JSON.parse(event.data) as MethodEvent<any>;
-
-      if (!methodTypes.includes(data.eventType)) {
-        return;
-      }
-
       if (typeof data.eventData !== "undefined") {
         window.TelegramWebviewProxy.postEvent(
           data.eventType,
