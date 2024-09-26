@@ -1,7 +1,7 @@
 import { NewPayment } from "#apps/new-payment";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "#packages/tma/shim";
+import "#packages/tma";
 
 const container = document.querySelector("#app");
 

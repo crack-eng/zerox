@@ -1,4 +1,4 @@
-import { isEvent, type Event } from "./event";
+import { isEvent, type Event } from "./predicates/is-event";
 import type { EventData } from "./event-data";
 import type { EventType } from "./event-type";
 
@@ -9,7 +9,7 @@ export const createEventListener =
   (event: MessageEvent) => {
     if (!isEvent(event)) return;
 
-    const data = JSON.parse(event.data) as Event;
+    const data = JSON.parse(event.data) as Event<any>;
 
     if (data.eventType !== type) return;
 
