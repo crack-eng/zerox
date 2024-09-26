@@ -1,19 +1,12 @@
-import {
-  createEvent,
-  createEventListener,
-  createTargetOrigin,
-} from "#packages/tma";
+import { createEvent, createEventListener, targetOrigin } from "#packages/tma";
 import { useEffect } from "react";
 
 export const NewPayment = () => {
   useEffect(() => {
-    window.parent.postMessage(
-      createEvent("web_app_expand"),
-      createTargetOrigin(),
-    );
+    window.parent.postMessage(createEvent("web_app_expand"), targetOrigin);
     window.parent.postMessage(
       createEvent("web_app_open_scan_qr_popup"),
-      createTargetOrigin(),
+      targetOrigin,
     );
   }, []);
 
@@ -35,7 +28,7 @@ export const NewPayment = () => {
               },
             ],
           }),
-          createTargetOrigin(),
+          targetOrigin,
         );
       }),
       { signal: controller.signal },

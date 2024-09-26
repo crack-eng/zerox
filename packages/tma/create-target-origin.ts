@@ -1,7 +1,2 @@
-export const createTargetOrigin = () => {
-  if (self !== top) {
-    return "https://web.telegram.org";
-  }
-
-  return window.location.origin;
-};
+export const targetOrigin =
+  self !== top ? "https://web.telegram.org" : window.location.origin;
