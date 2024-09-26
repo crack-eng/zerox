@@ -1,7 +1,7 @@
-import { Payments } from "#apps/payments";
-import "#packages/tma";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Payments } from "#apps/payments";
+import "#packages/tma";
 
 const container = document.querySelector("#app");
 

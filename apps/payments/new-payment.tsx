@@ -1,4 +1,8 @@
-import { createEvent, createEventListener, targetOrigin } from "#packages/tma";
+import {
+  createMessage,
+  createEventListener,
+  targetOrigin,
+} from "#packages/tma";
 import { useEffect } from "react";
 
 export type NewPaymentProps = {
@@ -9,7 +13,7 @@ export type NewPaymentProps = {
 export const NewPayment = (props: NewPaymentProps) => {
   useEffect(() => {
     window.parent.postMessage(
-      createEvent("web_app_setup_back_button", { is_visible: true }),
+      createMessage("web_app_setup_back_button", { is_visible: true }),
       targetOrigin,
     );
   }, []);
@@ -21,7 +25,7 @@ export const NewPayment = (props: NewPaymentProps) => {
       "message",
       createEventListener("back_button_pressed", () => {
         window.parent.postMessage(
-          createEvent("web_app_setup_back_button", { is_visible: false }),
+          createMessage("web_app_setup_back_button", { is_visible: false }),
           targetOrigin,
         );
         props.setListPaymentsState();
@@ -33,13 +37,13 @@ export const NewPayment = (props: NewPaymentProps) => {
 
   useEffect(() => {
     window.parent.postMessage(
-      createEvent("web_app_open_scan_qr_popup"),
+      createMessage("web_app_open_scan_qr_popup"),
       targetOrigin,
     );
 
     return () => {
       window.parent.postMessage(
-        createEvent("web_app_close_scan_qr_popup"),
+        createMessage("web_app_close_scan_qr_popup"),
         targetOrigin,
       );
     };

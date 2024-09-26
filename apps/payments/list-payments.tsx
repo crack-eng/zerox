@@ -1,4 +1,8 @@
-import { createEvent, createEventListener, targetOrigin } from "#packages/tma";
+import {
+  createMessage,
+  createEventListener,
+  targetOrigin,
+} from "#packages/tma";
 import { useEffect } from "react";
 
 export type ListPaymentsProps = {
@@ -8,7 +12,7 @@ export type ListPaymentsProps = {
 export const ListPayments = (props: ListPaymentsProps) => {
   useEffect(() => {
     window.parent.postMessage(
-      createEvent("web_app_setup_main_button", {
+      createMessage("web_app_setup_main_button", {
         is_visible: true,
         is_active: true,
         text: "New Payment",
@@ -18,7 +22,7 @@ export const ListPayments = (props: ListPaymentsProps) => {
 
     return () => {
       window.parent.postMessage(
-        createEvent("web_app_setup_main_button", {
+        createMessage("web_app_setup_main_button", {
           is_visible: false,
           is_active: false,
         }),
