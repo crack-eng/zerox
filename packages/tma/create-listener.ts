@@ -8,7 +8,7 @@ export type Event<T extends EventType> = {
 
 type Listener<T extends EventType> = (data?: EventData[T]) => void;
 
-export const createEventListener =
+export const createListener =
   <T extends EventType>(type: T, listener: Listener<T>) =>
   (event: MessageEvent) => {
     const data = JSON.parse(event.data) as Event<any>;

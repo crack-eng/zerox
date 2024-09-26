@@ -91,4 +91,4 @@ export const targetOrigin =
   self !== top ? "https://web.telegram.org" : window.location.origin;
 
 export * from "./create-message";
-export * from "./create-event-listener";
+export * from "./create-listener";

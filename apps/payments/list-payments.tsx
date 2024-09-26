@@ -1,6 +1,6 @@
 import {
   createMessage,
-  createEventListener,
+  createListener,
   targetOrigin,
 } from "#packages/tma";
 import { useEffect } from "react";
@@ -36,7 +36,7 @@ export const ListPayments = (props: ListPaymentsProps) => {
 
     window.addEventListener(
       "message",
-      createEventListener("main_button_pressed", () => {
+      createListener("main_button_pressed", () => {
         props.setNewPaymentState();
       }),
       { signal: controller.signal },

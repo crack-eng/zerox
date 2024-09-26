@@ -1,6 +1,6 @@
 import {
   createMessage,
-  createEventListener,
+  createListener,
   targetOrigin,
 } from "#packages/tma";
 import { useEffect } from "react";
@@ -23,7 +23,7 @@ export const NewPayment = (props: NewPaymentProps) => {
 
     window.addEventListener(
       "message",
-      createEventListener("back_button_pressed", () => {
+      createListener("back_button_pressed", () => {
         window.parent.postMessage(
           createMessage("web_app_setup_back_button", { is_visible: false }),
           targetOrigin,
@@ -54,7 +54,7 @@ export const NewPayment = (props: NewPaymentProps) => {
 
     window.addEventListener(
       "message",
-      createEventListener("qr_text_received", () => {
+      createListener("qr_text_received", () => {
         props.setConfirmPaymentState();
       }),
     );
