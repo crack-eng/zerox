@@ -27,8 +27,6 @@ window.addEventListener(
     if (!isMethodEvent(event)) return;
 
     if (self !== top) {
-      console.log("hello");
-
       return;
     }
 
